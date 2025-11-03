@@ -52,20 +52,35 @@ export default function Home() {
           <button
             type="submit"
             className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+            disabled={loading}
           >
-            Encurtar
+            {loading ? "Encurtando..." : "Encurtar"}
           </button>
         </div>
       </form>
 
-      {shortUrl && (
+      <div className="mt-8 p-4 w-full max-w-lg text-center">
         <div className="mt-8 p-4 bg-gray-100 rounded">
-          <p>Sua URL curta está pronta:</p>
-          <a href={shortUrl} target="_blank" className="text-teal-600 font-medium">
-            {shortUrl}
-          </a>
+          {error && (
+            <div className="p-3 bg-red-100 text-red-700 rounded">
+              <p>Erro: {error}</p>
+            </div>
+          )}
+          {shortUrl && (
+            <div className="p-3 bg-green-100 rounded">
+              <p className="font-medium">Sua URL curta está pronta:</p>
+              <a
+                href={shortUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-teal-600 font-bold break-words"
+              >
+                {shortUrl}
+              </a>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </main>
   );
 }
