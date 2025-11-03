@@ -14,7 +14,8 @@ export default function Home() {
     setShortUrl(null);
 
     try {
-      const response = await fetch("http://localhost:8080/api/mvp/shorten", {
+      const apiUrl = process.env.PUBLIC_API_URL || "http://localhost:8080";
+      const response = await fetch(`${apiUrl}/api/mvp/shorten`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
