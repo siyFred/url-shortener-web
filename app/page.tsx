@@ -5,9 +5,36 @@ import { useState } from 'react';
 export default function Home() {
   const [longUrl, setLongUrl] = useState<string>("");
   const [shortUrl, setShortUrl] = useState<string | null>(null);
-  const handleSubmit = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Enviando: ", longUrl);
+    setLoading(true);
+    setError(null);
+    setShortUrl(null);
+
+    try {
+      const response = await fetch("http://localhost:8080/api/mvp/shorten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ longUrl: longUrl }),
+      });
+      if (!response.ok) {
+        throw new Error("Falha ao encurtar a URL.");
+      }
+      const data = await response.json();
+      setShortUrl(data.shortUrl);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Ocorreu um erro desconhecido.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
