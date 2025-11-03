@@ -90,5 +90,9 @@ A aplicação de produção estará disponível em `http://localhost:3000`.
 * [ ] **Autenticação e Dashboard**
     * Implementar rotas de Login e Registro (para consumir a API do Spring Security/JWT).
     * Criar um Dashboard (`/dashboard`) para o usuário ver, editar e deletar seus links (consumindo os endpoints de CRUD da API).
+
 * [ ] **Analytics no Dashboard**
     * Adicionar exibição de estatísticas (contagem de cliques) no dashboard, consumindo os dados de analytics (Fase 4 do backend).
+
+* [ ] **Testes End-to-End (Cypress)**
+    * Implementar testes E2E com **Cypress** para simular o fluxo completo do usuário: criar, clicar no link e verificar o redirecionamento.
