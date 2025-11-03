@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Página Web do Encurtador de URL (url-shortener-web)
 
-## Getting Started
+Este projeto é o frontend (cliente web) para o Encurtador de URL, construído com Next.js, React e TypeScript.
 
-First, run the development server:
+Esta aplicação consome as APIs REST fornecidas pelo projeto backend (`url-shortener-api`).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+* **Repositório do Backend (API):** [github.com/siyFred/url-shortener-api](https://github.com/siyFred/url-shortener-api)
+
+O objetivo desta primeira versão (MVP) é fornecer uma interface de usuário limpa, simples e responsiva para consumir a funcionalidade central da API.
+
+* **Criação de Links:** Permite ao usuário submeter uma URL longa.
+* **Exibição do Resultado:** Exibe a URL curta retornada pela API.
+* **Feedback Visual:** Fornece feedback de "loading" (carregando) e "error" (erro) durante a requisição à API.
+
+## Tecnologias Usadas
+
+* **Next.js 14+** (com App Router)
+* **React 18**
+* **TypeScript**
+* **Tailwind CSS**
+* **npm**
+
+## Como Rodar Localmente
+
+Você precisará ter o [Node.js](https://nodejs.org/en) (v18 ou mais recente) instalado.
+
+### Pré-requisito: A API Backend DEVE estar rodando e funcionando com o banco de dados
+
+Esta é uma aplicação cliente. Ela **requer** que a API backend (`url-shortener-api`) esteja rodando na porta `8080`.
+
+Por favor, siga as instruções no **[README do Backend](https://github.com/siyFred/url-shortener-api)** para iniciar a API e o banco de dados PostgreSQL com sucesso.
+
+### 1. Variável de Ambiente
+
+Este projeto precisa saber onde a API está. Crie um arquivo na raiz do projeto chamado `.env.local` e cole o seguinte:
+
+```
+PUBLIC_API_URL=http://localhost:8080
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Clone o repositório:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+git clone [https://github.com/siyFred/url-shortener-web.git](https://github.com/siyFred/url-shortener-web.git)
+cd url-shortener-web
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Instale as Dependências:
 
-## Learn More
+```bash
+npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Rode o Servidor de Desenvolvimento:
+```bash
+npm run dev
+```
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Compilando e Rodando (Produção)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Se você preferir compilar e rodar uma versão de produção:
 
-## Deploy on Vercel
+**1. Garanta que a API Backend esteja rodando.**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**2. Configure a Variável de Ambiente:**
+Em um servidor de produção, você precisará definir a variável de ambiente `PUBLIC_API_URL` para o endereço da sua API (ex: `https://api.meusite.com`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**3. Compile o Projeto:**
+```bash
+npm run build
+```
+Isso irá criar uma build otimizada na pasta `.next/`.
+
+**4. Rode a Aplicação:**
+```bash
+npm run start
+```
+A aplicação de produção estará disponível em `http://localhost:3000`.
+
+## Tasks (Roadmap)
+
+* [ ] **Autenticação e Dashboard**
+    * Implementar rotas de Login e Registro (para consumir a API do Spring Security/JWT).
+    * Criar um Dashboard (`/dashboard`) para o usuário ver, editar e deletar seus links (consumindo os endpoints de CRUD da API).
+* [ ] **Analytics no Dashboard**
+    * Adicionar exibição de estatísticas (contagem de cliques) no dashboard, consumindo os dados de analytics (Fase 4 do backend).
