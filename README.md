@@ -82,7 +82,7 @@ A aplicação de produção estará disponível em `http://localhost:3000`.
 
 ### MVP
 * [x] **Interface para Criar e Exibir:** Construir o formulário de `input` e botão; mostrar a URL curta retornada pela API.
-* [x] **Consumo de API:** Integrar com o backend (`POST /api/mvp/shorten`) usando `fetch`.
+* [x] **Consumo de API:** Integrar com o backend (`POST /api/shorten`) usando `fetch`.
 * [x] **Feedback Visual:** Implementar estados de `loading` (carregando) e `error` (erro).
 * [x] **Boas Práticas:** Usar Variáveis de Ambiente (`.env.local`) para a URL da API.
 
