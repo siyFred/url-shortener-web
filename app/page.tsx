@@ -39,7 +39,9 @@ export default function Home() {
       const data = await response.json();
       setShortUrl(data.shortUrl);
     } catch (err) {
-      if (err instanceof Error) {
+      if (err instanceof TypeError) {
+        setError("Não foi possível conectar ao servidor. Tente novamente.");
+      } else if (err instanceof Error) {
         setError(err.message);
       } else {
         setError("Ocorreu um erro desconhecido.");
