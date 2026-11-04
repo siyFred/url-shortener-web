@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Home() {
   const [longUrl, setLongUrl] = useState<string>("");
   const [shortUrl, setShortUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!longUrl.trim()) {
+      setError("Insira uma URL válida para encurtar.");
+      setShortUrl(null);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setShortUrl(null);
@@ -20,11 +28,13 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ longUrl: longUrl }),
+        body: JSON.stringify({ longUrl: longUrl.trim() }),
       });
+
       if (!response.ok) {
         throw new Error("Falha ao encurtar a URL.");
       }
+
       const data = await response.json();
       setShortUrl(data.shortUrl);
     } catch (err) {
@@ -39,49 +49,71 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="text-4xl font-bold mb-8">Encurtador de URL</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-lg">
-        <div className="flex items-center border-b border-teal-500 py-2">
-          <input
-            type="text"
-            placeholder="Insira sua URL..."
-            value={longUrl}
-            onChange={(e) => setLongUrl(e.target.value)}
-            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-            disabled={loading}
-          >
-            {loading ? "Encurtando..." : "Encurtar"}
-          </button>
-        </div>
-      </form>
-
-      <div className="mt-8 p-4 w-full max-w-lg text-center">
-        <div className="mt-8 p-4 bg-gray-100 rounded">
-          {error && (
-            <div className="p-3 bg-red-100 text-red-700 rounded">
-              <p>Erro: {error}</p>
-            </div>
-          )}
-          {shortUrl && (
-            <div className="p-3 bg-green-100 rounded">
-              <p className="font-medium">Sua URL curta está pronta:</p>
-              <a
-                href={shortUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-teal-600 font-bold break-words"
-              >
-                {shortUrl}
-              </a>
-            </div>
-          )}
-        </div>
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-12 sm:px-10 lg:px-14">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-28 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-400/20 blur-3xl" />
+        <div className="absolute bottom-8 right-0 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" />
       </div>
+
+      <section className="relative mx-auto w-full max-w-5xl">
+        <div className="rounded-3xl border border-white/20 bg-white/70 p-8 shadow-2xl shadow-slate-900/10 backdrop-blur-xl sm:p-12">
+          <h1 className="text-4xl font-bold leading-tight text-slate-900 sm:text-6xl">
+            Encurte seus links
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg text-slate-600 sm:text-xl">
+            Cole uma URL longa e gere uma versão curta em segundos.
+          </p>
+
+          <form onSubmit={handleSubmit} className="mt-10 space-y-5">
+            <label htmlFor="longUrl" className="text-lg font-medium text-slate-700 sm:text-xl">
+              Cole sua URL
+            </label>
+            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <input
+                  id="longUrl"
+                  type="url"
+                  placeholder="https://seusite.com/artigo-incrivel"
+                  value={longUrl}
+                  onChange={(e) => setLongUrl(e.target.value)}
+                  className="h-14 w-full rounded-xl border border-transparent px-5 text-lg text-slate-700 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-300/40"
+                />
+                <button
+                  type="submit"
+                  className="h-14 rounded-xl bg-slate-900 px-7 text-lg font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-40"
+                  disabled={loading}
+                >
+                  {loading ? "Encurtando..." : "Encurtar"}
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div className="mt-8 space-y-4">
+            {error && (
+              <div className="rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-lg text-red-700">
+                {error}
+              </div>
+            )}
+
+            {shortUrl && (
+              <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4">
+                <p className="text-lg font-medium text-emerald-800">
+                  Sua URL curta está pronta:
+                </p>
+                <a
+                  href={shortUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 block break-all text-lg font-semibold text-emerald-700 underline decoration-emerald-300 underline-offset-4"
+                >
+                  {shortUrl}
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
