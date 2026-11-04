@@ -72,7 +72,11 @@ export default function Home() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <input
                   id="longUrl"
-                  type="url"
+                  type="text"
+                  inputMode="url"
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  spellCheck={false}
                   placeholder="https://seusite.com/artigo-incrivel"
                   value={longUrl}
                   onChange={(e) => setLongUrl(e.target.value)}
