@@ -32,7 +32,8 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        throw new Error("Falha ao encurtar a URL.");
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.message ?? "Falha ao encurtar a URL.");
       }
 
       const data = await response.json();
