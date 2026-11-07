@@ -14,8 +14,8 @@ O objetivo desta primeira versão (MVP) é fornecer uma interface de usuário li
 
 ## Tecnologias Usadas
 
-* **Next.js 14+** (com App Router)
-* **React 18**
+* **Next.js 16** (com App Router)
+* **React 19**
 * **TypeScript**
 * **Tailwind CSS**
 * **npm**
@@ -35,7 +35,7 @@ Por favor, siga as instruções no **[README do Backend](https://github.com/siyF
 Este projeto precisa saber onde a API está. Crie um arquivo na raiz do projeto chamado `.env.local` e cole o seguinte:
 
 ```
-PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_API_URL=http://localhost:8080
 ```
 
 ### 2. Clone o repositório:
@@ -64,7 +64,7 @@ Se você preferir compilar e rodar uma versão de produção:
 **1. Garanta que a API Backend esteja rodando.**
 
 **2. Configure a Variável de Ambiente:**
-Em um servidor de produção, você precisará definir a variável de ambiente `PUBLIC_API_URL` para o endereço da sua API (ex: `https://api.meusite.com`).
+Em um servidor de produção, você precisará definir a variável de ambiente `NEXT_PUBLIC_API_URL` para o endereço da sua API (ex: `https://api.meusite.com`).
 
 **3. Compile o Projeto:**
 ```bash
